@@ -20,11 +20,13 @@ def parse_pres_pipes(pres_desc_str):
     """
     slide_tokens = pres_desc_str.split("--")
 
-    if len(slide_tokens) < 1:
+    if len(slide_tokens) < 2:
+        print("""No complete slide found (to be complete, a slide must be
+                surrounded by double-pipes '--').""")
         return "", []
 
-    index_str = slide_tokens[0]
-    slides_str_list = slide_tokens[1:]
+    index_str = slide_tokens[1]
+    slides_str_list = slide_tokens[2:]
 
     return index_str, slides_str_list
 
@@ -34,6 +36,8 @@ def parse_slide_pipes(slide_desc_str):
     This function parses the content of a slides, constructs the visual
     representation.
     """
+    tile_tokens = slide_desc_str.split("-")
+    return tile_tokens
 
 
 
