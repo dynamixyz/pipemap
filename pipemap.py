@@ -4,8 +4,8 @@ import os
 
 import click
 
-from .pipes import parse_pres_pipes, parse_slide_pipes
-from .view import generate_index_slide,generate_slide, populate_pres_folder
+from pipemap.pipes import parse_pres_pipes, parse_slide_pipes
+from pipemap.view import generate_index_slide,generate_slide, populate_pres_folder
 
 @click.group()
 def cli():

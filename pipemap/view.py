@@ -6,6 +6,7 @@ def generate_index_slide(
     """
     generate string for the html index slide
     """
+    import ipdb; ipdb.set_trace()
     index_slide_html = ""
     index_slide_css = ""
     return index_slide_html, index_slide_css
