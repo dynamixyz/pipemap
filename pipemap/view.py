@@ -3,16 +3,29 @@ import os
 import shutil
 from pipemap.pipes import parse_slide_pipes
 
-def get_bare_page():
+def get_bare_css():
     """
-    generate empty html+css page to populate
+    generate empty css page to populate
+    """
+    bare_css = ""
+    return bare_css
+
+def merge_slide_style(css_str, style_dict):
+    """
+    grow an existing css string with new rules inside a style_dict
+    """
+    print("TODO: css merging")
+    return css_str
+
+def get_bare_html_page():
+    """
+    generate empty html page to populate
     """
     bare_html_prefix = os.linesep.join([
         "<!DOCTYPE html>", "<html>", "<body>"])
     bare_html_suffix = os.linesep.join([
         "</body>", "</html>"])
-    bare_css = ""
-    return bare_html_prefix, bare_html_suffix, bare_css
+    return bare_html_prefix, bare_html_suffix
 
 def parse_markdown(tile_md):
     """
@@ -38,17 +51,19 @@ def generate_slide(
     generate string for a standard slide
     """
     tiles_list = parse_slide_pipes(slide_str)
-    html_prefix, html_suffix, slide_css = get_bare_page()
+    html_prefix, html_suffix = get_bare_html_page()
+    slide_style_dict = {}
     slide_html = ""
     for tile in tiles_list:
         slide_html += parse_markdown(tile)
     slide_html = html_prefix + slide_html + html_suffix
-    return slide_html, slide_css
+    return slide_html, slide_style_dict
 
 def populate_pres_folder(
         dest_folderpath,
-        index_slide_htmlcss,
-        slides_htmlcss_list,
+        index_slide_html,
+        slides_html_list,
+        pres_css,
         dont_create_new_folder=False,
         warn_if_dest_not_empty=False,
         ):
@@ -68,19 +83,17 @@ def populate_pres_folder(
         os.mkdir(dest_folderpath)
 
     with open(os.path.join(dest_folderpath,"index.html"), "w") as index_file:
-        index_file.write(index_slide_htmlcss[0])
-    with open(os.path.join(dest_folderpath,"index.css"), "w") as index_file:
-        index_file.write(index_slide_htmlcss[1])
+        index_file.write(index_slide_html)
 
-    nb_slides = len(slides_htmlcss_list)
+    nb_slides = len(slides_html_list)
     for i_s in range(nb_slides):
         with open(
                 os.path.join(dest_folderpath,"slide_%03d.html"%(i_s)),
                 "w") as slide_file:
-            slide_file.write(slides_htmlcss_list[i_s][0])
-        with open(
-                os.path.join(dest_folderpath,"slide_%03d.css"%(i_s)),
-                "w") as slide_file:
-            slide_file.write(slides_htmlcss_list[i_s][1])
+            slide_file.write(slides_html_list[i_s])
+    with open(
+            os.path.join(dest_folderpath,"pres.css"),
+            "w") as slide_file:
+        slide_file.write(pres_css)
 
 

@@ -26,7 +26,7 @@ def parse_pres_pipes(pres_desc_str):
         return "", []
 
     index_str = slide_tokens[1]
-    slides_str_list = slide_tokens[2:]
+    slides_str_list = slide_tokens[2:-1]
 
     return index_str, slides_str_list
 

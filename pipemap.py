@@ -5,7 +5,7 @@ import os
 import click
 
 from pipemap.pipes import parse_pres_pipes, parse_slide_pipes
-from pipemap.view import generate_index_slide,generate_slide, populate_pres_folder
+from pipemap.view import generate_index_slide,generate_slide, populate_pres_folder, get_bare_css, merge_slide_style
 
 @click.group()
 def cli():
@@ -35,16 +35,22 @@ def compile_pres(
             pres_desc_str)
 
     # parse tiles
-    index_slide_htmlcss = generate_index_slide(index_str)
-    slides_htlmcss_list = [
-            generate_slide(slide_str)
-            for slide_str in slides_str_list]
+    index_slide_html, index_slide_style = generate_index_slide(index_str)
+    slides_html_list = []
+    slides_style_list = []
+    pres_css = get_bare_css()
+    pres_css = merge_slide_style(pres_css, index_slide_style)
+    for slide_str in slides_str_list:
+        slide_html, slide_style = generate_slide(slide_str)
+        pres_css = merge_slide_style(pres_css, slide_style)
+        slides_html_list.append(slide_html)
 
     # generate HTML & CSS
     populate_pres_folder(
             dest_folderpath,
-            index_slide_htmlcss,
-            slides_htlmcss_list,
+            index_slide_html,
+            slides_html_list,
+            pres_css,
             dont_create_new_folder,
             warn_if_dest_not_empty,
             )
