@@ -2,6 +2,7 @@
 import os
 import shutil
 from pipemap.pipes import parse_slide_pipes
+from pipemap.html_utils import get_bare_html_page, get_link_str
 
 def get_bare_css():
     """
@@ -17,16 +18,6 @@ def merge_slide_style(css_str, style_dict):
     print("TODO: css merging")
     return css_str
 
-def get_bare_html_page():
-    """
-    generate empty html page to populate
-    """
-    bare_html_prefix = os.linesep.join([
-        "<!DOCTYPE html>", "<html>", "<body>"])
-    bare_html_suffix = os.linesep.join([
-        "</body>", "</html>"])
-    return bare_html_prefix, bare_html_suffix
-
 def parse_markdown(tile_md):
     """
     parse markdown string, return corresponding html
@@ -39,14 +30,21 @@ def parse_markdown(tile_md):
     return tile_str
 
 def generate_index_slide(
-        index_str):
+        index_str,
+        prev_link=None,
+        next_link=None):
     """
     generate string for the html index slide
     """
-    return generate_slide(index_str)
+    return generate_slide(
+            index_str,
+            prev_link=prev_link,
+            next_link=next_link)
 
 def generate_slide(
-        slide_str):
+        slide_str,
+        prev_link=None,
+        next_link=None):
     """
     generate string for a standard slide
     """
@@ -56,14 +54,26 @@ def generate_slide(
     slide_html = ""
     for tile in tiles_list:
         slide_html += parse_markdown(tile)
+    if prev_link is not None:
+        slide_html += os.linesep + get_link_str(prev_link, "previous slide")
+    if next_link is not None:
+        slide_html += os.linesep + get_link_str(next_link, "next slide")
     slide_html = html_prefix + slide_html + html_suffix
     return slide_html, slide_style_dict
+
+def generate_slide_names(
+        nb_slides):
+    slide_names = [
+        "slide_%03d"%(i_s)
+        for i_s in range(nb_slides)]
+    return slide_names
 
 def populate_pres_folder(
         dest_folderpath,
         index_slide_html,
         slides_html_list,
         pres_css,
+        slide_names,
         dont_create_new_folder=False,
         warn_if_dest_not_empty=False,
         ):
@@ -88,7 +98,7 @@ def populate_pres_folder(
     nb_slides = len(slides_html_list)
     for i_s in range(nb_slides):
         with open(
-                os.path.join(dest_folderpath,"slide_%03d.html"%(i_s)),
+                os.path.join(dest_folderpath, "%s.html"%(slide_names[i_s])),
                 "w") as slide_file:
             slide_file.write(slides_html_list[i_s])
     with open(
