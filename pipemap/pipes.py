@@ -18,11 +18,11 @@ def parse_pres_pipes(pres_desc_str):
     This function separates the code of the different slides of the
     presentation.
     """
-    slide_tokens = pres_desc_str.split("--")
+    slide_tokens = pres_desc_str.split("---")
 
     if len(slide_tokens) < 2:
         print("""No complete slide found (to be complete, a slide must be
-                surrounded by double-pipes '--').""")
+                surrounded by triple-pipes '---').""")
         return "", []
 
     index_str = slide_tokens[1]

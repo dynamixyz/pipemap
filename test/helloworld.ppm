@@ -2,17 +2,33 @@
 ############################# Pipemap Hello World ##############################
 ################################################################################
 
---
+---
 Hello World
 This is Pipemap !
 
---
-Awesome first slide
+---
+Awesome first slide.
+But just plain text
 
---
+---
 Second slide is not too bad either
+Attempt at tiling
+-
+horizontal tile
+-
+triple col 1
+|
+triple col 2
+|
+triple col 3
+-
 
---
+
+
+---
+That's all folks
+
+---
 
 ################################################################################
 
