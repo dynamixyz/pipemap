@@ -1,3 +1,4 @@
+import os
 
 #def _get_first_char_ind(line_str):
 #    """
@@ -18,7 +19,15 @@ def parse_pres_pipes(pres_desc_str):
     This function separates the code of the different slides of the
     presentation.
     """
-    slide_tokens = pres_desc_str.split("---")
+    # remove comment lines
+    pres_desc_lines = pres_desc_str.splitlines()
+    pres_desc_lines_nocomment = [
+            line
+            for line in pres_desc_lines
+            if not line.lstrip().startswith("#")]
+    pres_desc_str_parsed = os.linesep.join(pres_desc_lines_nocomment)
+
+    slide_tokens = pres_desc_str_parsed.split("---")
 
     if len(slide_tokens) < 2:
         print("""No complete slide found (to be complete, a slide must be

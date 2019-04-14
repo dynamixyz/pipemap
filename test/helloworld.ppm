@@ -11,10 +11,10 @@ Awesome first slide.
 But just plain text
 
 ---
-Second slide is not too bad either
-Attempt at tiling
+Second slide
+Attempt at horizontal tiling
 -
-horizontal tile
+full horizontal tile
 -
 triple col 1
 |
@@ -23,7 +23,15 @@ triple col 2
 triple col 3
 -
 
-
+#---
+#Attempt at complex tiling
+#-
+#triple col 1
+#|
+#triple col 2
+#|
+#triple col 3
+#-
 
 ---
 That's all folks
