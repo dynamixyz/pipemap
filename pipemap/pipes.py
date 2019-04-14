@@ -21,12 +21,14 @@ def parse_pres_pipes(pres_desc_str):
     """
     # remove comment lines
     pres_desc_lines = pres_desc_str.splitlines()
-    pres_desc_lines_nocomment = [
-            line
-            for line in pres_desc_lines
-            if not line.lstrip().startswith("#")]
+    pres_desc_lines_nocomment = []
+    for line in pres_desc_lines:
+        line = line.lstrip()
+        if not line.lstrip().startswith("#"):
+            pres_desc_lines_nocomment.append(line)
     pres_desc_str_parsed = os.linesep.join(pres_desc_lines_nocomment)
 
+    # now parsing slide separations
     slide_tokens = pres_desc_str_parsed.split("---")
 
     if len(slide_tokens) < 2:
