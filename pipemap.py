@@ -52,7 +52,9 @@ def compile_pres(
                 generate_slide(
                         slide_str,
                         prev_link=slide_names[i_s-1] if i_s>0 else index_name,
-                        next_link=slide_names[i_s+1] if i_s<(nb_slides-1) else None)
+                        next_link=slide_names[i_s+1] if i_s<(nb_slides-1) else None,
+                        numbering=i_s)
+
         pres_css = merge_slide_style(pres_css, slide_style)
         slides_html_list.append(slide_html)
 

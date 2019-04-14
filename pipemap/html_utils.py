@@ -19,3 +19,10 @@ def get_link_str(
     """
     return "<a href=\"%s.html\">%s</a>"%(tgt_page_name, link_name)
 
+def get_numbering_str(
+        numbering):
+    """
+    get string corresponding to an html link
+    """
+    return "<p>%d</p>"%(numbering)
+

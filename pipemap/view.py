@@ -2,7 +2,7 @@
 import os
 import shutil
 from pipemap.pipes import parse_slide_pipes
-from pipemap.html_utils import get_bare_html_page, get_link_str
+from pipemap.html_utils import get_bare_html_page, get_link_str, get_numbering_str
 
 def get_bare_css():
     """
@@ -32,19 +32,22 @@ def parse_markdown(tile_md):
 def generate_index_slide(
         index_str,
         prev_link=None,
-        next_link=None):
+        next_link=None,
+        numbering=None):
     """
     generate string for the html index slide
     """
     return generate_slide(
             index_str,
             prev_link=prev_link,
-            next_link=next_link)
+            next_link=next_link,
+            numbering=numbering)
 
 def generate_slide(
         slide_str,
         prev_link=None,
-        next_link=None):
+        next_link=None,
+        numbering=None):
     """
     generate string for a standard slide
     """
@@ -58,6 +61,8 @@ def generate_slide(
         slide_html += os.linesep + get_link_str(prev_link, "previous slide")
     if next_link is not None:
         slide_html += os.linesep + get_link_str(next_link, "next slide")
+    if numbering is not None:
+        slide_html += os.linesep + get_numbering_str(numbering)
     slide_html = html_prefix + slide_html + html_suffix
     return slide_html, slide_style_dict
 
