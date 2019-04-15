@@ -83,13 +83,10 @@ def populate_pres_folder(
         warn_if_dest_not_empty=False,
         ):
     if not os.path.exists(dest_folderpath):
-        if not os.path.exists(os.path.dirname(dest_folderpath)):
-            raise IOError("""Cannot create pres folder, parent path does not
-                    exist (%s)."""%(os.path.dirname(dest_folderpath)))
         if dont_create_new_folder:
             raise IOError("""Pres destination folder path does not exist (%s),
                     requested not to create one."""%(dest_folderpath))
-        os.mkdir(dest_folderpath)
+        os.makedirs(dest_folderpath)
     if os.listdir(dest_folderpath):
         if warn_if_dest_not_empty:
             raise IOError("""destination folder is not empty (%s), but requested
