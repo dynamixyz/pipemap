@@ -11,14 +11,30 @@ from pipemap.view import generate_index_slide,generate_slide, populate_pres_fold
 def cli():
     pass
 
+
+# Some general presentation properties
+# They probably ultimately need tom move to a user-modifyable config file
+def read_config_file(
+        config_filepath=""
+        ):
+    if config_filepath != "":
+        raise NotImplementedYet("")
+    config_dict = {
+            "pres_css_name": "pres",
+            }
+    return config_dict
+
+
 @cli.command()
 @click.argument('pres_desc_filepath', nargs=1)
 @click.argument('dest_folderpath', nargs=1)
+@click.option('--config_filepath', default="")
 @click.option('--dont_create_new_folder', default=False)
 @click.option('--warn_if_dest_not_empty', default=False)
 def compile_pres(
         pres_desc_filepath,
         dest_folderpath,
+        config_filepath="",
         dont_create_new_folder=False,
         warn_if_dest_not_empty=False,
             ):
@@ -27,6 +43,9 @@ def compile_pres(
     The corresponding presentation will be generated inside the designated
     folder.
     """
+    config_dict = read_config_file(config_filepath)
+
+
     with open(pres_desc_filepath, 'r') as pres_desc_file:
         pres_desc_str = pres_desc_file.read()
 
@@ -53,7 +72,9 @@ def compile_pres(
                 slide_str,
                 prev_link=slide_names[i_s-1] if i_s>0 else index_name,
                 next_link=slide_names[i_s+1] if i_s<(nb_slides-1) else None,
-                numbering=i_s)
+                numbering=i_s,
+                css_filename=config_dict["pres_css_name"],
+                )
 
         pres_css = merge_slide_style(pres_css, slide_style)
         slides_html_list.append(slide_html)
@@ -67,6 +88,7 @@ def compile_pres(
             slide_names,
             dont_create_new_folder,
             warn_if_dest_not_empty,
+            pres_css_name=config_dict["pres_css_name"],
             )
 
 if __name__ == "__main__":

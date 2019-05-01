@@ -1,14 +1,26 @@
 
 import os
 
-def get_bare_html_page():
+def get_bare_html_page(
+            css_filename="pres",
+            ):
     """
     generate empty html page to populate
     """
     bare_html_prefix = os.linesep.join([
-        "<!DOCTYPE html>", "<html>", "<body>"])
+        "<!DOCTYPE html>",
+        "<html>",
+        "<head>",
+        "<link rel=\"stylesheet\" type=\"text/css\" href=\"%s.css\">"%(
+            css_filename),
+        "</head>",
+        "<body>",
+        ""],
+        )
     bare_html_suffix = os.linesep.join([
-        "</body>", "</html>"])
+        "",
+        "</body>",
+        "</html>"])
     return bare_html_prefix, bare_html_suffix
 
 def get_link_str(

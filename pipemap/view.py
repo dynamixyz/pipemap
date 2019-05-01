@@ -33,7 +33,9 @@ def generate_index_slide(
         index_str,
         prev_link=None,
         next_link=None,
-        numbering=None):
+        numbering=None,
+        css_filename="pres",
+        ):
     """
     generate string for the html index slide
     """
@@ -41,18 +43,24 @@ def generate_index_slide(
             index_str,
             prev_link=prev_link,
             next_link=next_link,
-            numbering=numbering)
+            numbering=numbering,
+            css_filename=css_filename,
+            )
 
 def generate_slide(
         slide_str,
         prev_link=None,
         next_link=None,
-        numbering=None):
+        numbering=None,
+        css_filename="pres",
+        ):
     """
     generate string for a standard slide
     """
     tiles_list = parse_slide_pipes(slide_str)
-    html_prefix, html_suffix = get_bare_html_page()
+    html_prefix, html_suffix = get_bare_html_page(
+            css_filename,
+            )
     slide_style_dict = {}
     slide_html = ""
     for tile in tiles_list:
@@ -81,6 +89,7 @@ def populate_pres_folder(
         slide_names,
         dont_create_new_folder=False,
         warn_if_dest_not_empty=False,
+        pres_css_name="pres"
         ):
     if not os.path.exists(dest_folderpath):
         if dont_create_new_folder:
@@ -104,7 +113,7 @@ def populate_pres_folder(
                 "w") as slide_file:
             slide_file.write(slides_html_list[i_s])
     with open(
-            os.path.join(dest_folderpath,"pres.css"),
+            os.path.join(dest_folderpath,"%s.css"%(pres_css_name)),
             "w") as slide_file:
         slide_file.write(pres_css)
 
