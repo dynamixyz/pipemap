@@ -14,23 +14,31 @@ But just plain text
 Second slide
 Attempt at horizontal tiling
 -
-full horizontal tile
+    full horizontal tile
 -
-triple col 1
-|
-triple col 2
-|
-triple col 3
+    double col 1
+    |
+    double col 2
+-
+    triple col 1
+    |
+    triple col 2
+    |
+    triple col 3
 -
 
 #---
 #Attempt at complex tiling
 #-
-#triple col 1
-#|
-#triple col 2
-#|
-#triple col 3
+#    doube col 1 line 1
+#    -
+#    doube col 1 line 2
+#    |
+#    doube col 1 line 1
+#    -
+#    doube col 1 line 2
+#    -
+#    doube col 1 line 3
 #-
 
 ---
